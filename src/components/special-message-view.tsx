@@ -69,19 +69,19 @@ const styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 32,
     fontWeight: '800',
-    color: colors.pink.dark,
+    color: colors.blue.dark,
   },
   shout: {
     fontSize: 34,
     lineHeight: 42,
     fontWeight: '900',
-    color: colors.pink.medium,
+    color: colors.blue.medium,
   },
   emphasis: {
     fontSize: 23,
     lineHeight: 32,
     fontWeight: '800',
-    color: colors.turquoise.dark,
+    color: colors.blue.dark,
   },
   decoration: {
     fontSize: 24,
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 25,
     fontWeight: '700',
-    color: colors.pink.dark,
+    color: colors.blue.dark,
   },
   button: {
     width: '100%',
@@ -105,12 +105,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: Spacing.three,
     borderRadius: 999,
-    backgroundColor: colors.pink.light,
+    backgroundColor: colors.blue.light,
   },
   buttonText: {
     fontWeight: '800',
     textAlign: 'center',
-    color: colors.pink.dark,
+    color: colors.blue.dark,
   },
   pressed: {
     opacity: 0.75,

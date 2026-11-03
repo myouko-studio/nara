@@ -442,6 +442,8 @@ export default function CategoriesScreen() {
                 <CategoryAction
                   label={editingGroupId ? t.categories.save : t.categories.addGroup}
                   disabled={isSaving || !groupName.trim()}
+                  textColor={colors.green.dark}
+                  disabledBackgroundColor={colors.green.light}
                   onPress={() => void saveGroup()}
                 />
                 {editingGroupId && (
@@ -561,6 +563,8 @@ export default function CategoriesScreen() {
                 <CategoryAction
                   label={editingMemberId ? t.categories.save : t.categories.addMember}
                   disabled={isSaving || !memberName.trim() || !memberGroupId}
+                  textColor={colors.green.dark}
+                  disabledBackgroundColor={colors.green.light}
                   onPress={() => void saveMember()}
                 />
                 {editingMemberId && (
@@ -626,6 +630,8 @@ export default function CategoriesScreen() {
                   ? !groupName.trim()
                   : !memberName.trim() || !memberGroupId)
               }
+              textColor={colors.green.dark}
+              disabledBackgroundColor={colors.green.light}
               onPress={() => {
                 if (focusedForm === 'group') {
                   void saveGroup();
@@ -688,6 +694,7 @@ function CategoryAction({
   secondary = false,
   destructive = false,
   textColor,
+  disabledBackgroundColor,
   onPress,
 }: {
   label: string;
@@ -695,6 +702,7 @@ function CategoryAction({
   secondary?: boolean;
   destructive?: boolean;
   textColor?: string;
+  disabledBackgroundColor?: string;
   onPress: () => void;
 }) {
   return (
@@ -705,13 +713,15 @@ function CategoryAction({
       style={({ pressed }) => [
         styles.action,
         {
-          backgroundColor: destructive
-            ? colors.orange.medium
-            : secondary
-              ? colors.yellow.light
-              : colors.green.medium,
+          backgroundColor: disabled && disabledBackgroundColor
+            ? disabledBackgroundColor
+            : destructive
+              ? colors.orange.medium
+              : secondary
+                ? colors.yellow.light
+                : colors.green.medium,
         },
-        disabled && styles.disabled,
+        disabled && !disabledBackgroundColor && styles.disabled,
         pressed && styles.pressed,
       ]}>
       <ThemedText style={[styles.actionText, textColor ? { color: textColor } : undefined]}>
@@ -732,7 +742,7 @@ function TextAction({
 }) {
   return (
     <Pressable accessibilityRole="button" onPress={onPress} hitSlop={8}>
-      <ThemedText style={{ color: destructive ? colors.orange.dark : colors.turquoise.dark }}>
+      <ThemedText style={{ color: destructive ? colors.orange.dark : colors.green.dark }}>
         {label}
       </ThemedText>
     </Pressable>

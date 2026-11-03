@@ -8,19 +8,41 @@ import {
 } from 'expo-router/ui';
 import { SymbolView, type SymbolViewProps } from 'expo-symbols';
 import type { ComponentProps } from 'react';
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { colors, Spacing, tabBarColors, tabColors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { useLanguage } from '@/i18n/language-context';
 
 export default function AppTabs() {
   const { t } = useLanguage();
+  const insets = useSafeAreaInsets();
+  const theme = useTheme();
 
   return (
     <Tabs>
       <TabSlot style={{ height: '100%' }} />
+      <View
+        accessibilityLabel="Nara"
+        accessibilityRole="image"
+        accessible
+        style={[
+          styles.naraAccessPlaceholder,
+          {
+            top: insets.top + Spacing.two,
+            backgroundColor: theme.backgroundElement,
+            borderColor: theme.textSecondary,
+          },
+        ]}>
+        <Image
+          accessible={false}
+          resizeMode="contain"
+          source={require('@/assets/images/logo.png')}
+          style={styles.naraIcon}
+        />
+      </View>
       <TabList asChild>
         <CustomTabList>
           <TabTrigger name="universe" href="/universe" asChild>
@@ -251,5 +273,22 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     fontWeight: '500',
     textAlign: 'center',
+  },
+  naraAccessPlaceholder: {
+    position: 'absolute',
+    right: Spacing.three,
+    zIndex: 2,
+    width: 48,
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: Spacing.one,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 14,
+  },
+  naraIcon: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
   },
 });

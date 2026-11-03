@@ -302,7 +302,7 @@ function CropEditor({
       </View>
       <View style={styles.actions}>
         <ActionButton
-          backgroundColor={colors.green.medium}
+          backgroundColor={colors.yellow.light}
           disabled={isBusy}
           label={applyLabel}
           onPress={() => onApply(crop, displayWidth, displayHeight)}
@@ -614,23 +614,29 @@ export default function RegisterScreen() {
           <ThemedText type="subtitle">{t.register.greeting}</ThemedText>
           <ThemedText style={styles.centeredText}>{t.register.chooseImage}</ThemedText>
 
-          <View style={styles.actions}>
-            <ActionButton
-              backgroundColor={colors.turquoise.light}
-              textColor={colors.turquoise.dark}
+          <View style={styles.captureActions}>
+            <CaptureActionButton
+              backgroundColor={colors.yellow.medium}
+              foregroundColor={colors.yellow.dark}
               disabled={isBusy}
               label={t.register.takePhoto}
+              icon={{ ios: 'camera.fill', android: 'photo_camera', web: 'photo_camera' }}
               onPress={() => void selectImage('camera')}
             />
-            <ActionButton
-              backgroundColor={colors.pink.light}
-              textColor={colors.pink.dark}
+            <CaptureActionButton
+              backgroundColor={colors.yellow.light}
+              foregroundColor={colors.yellow.dark}
               disabled={isBusy}
               label={t.register.chooseFromGallery}
+              icon={{
+                ios: 'photo.on.rectangle',
+                android: 'photo_library',
+                web: 'photo_library',
+              }}
               onPress={() => void selectImage('gallery')}
             />
           </View>
-          {isBusy && <ActivityIndicator color={colors.turquoise.dark} />}
+          {isBusy && <ActivityIndicator color={colors.yellow.dark} />}
           {error && <ThemedText style={styles.error}>{t.register[error]}</ThemedText>}
         </ScrollView>
       )}
@@ -641,8 +647,8 @@ export default function RegisterScreen() {
           <View style={styles.imageTools}>
             <View style={styles.cropTool}>
               <PreviewActionButton
-                backgroundColor={colors.pink.medium}
-                foregroundColor={isDarkTheme ? colors.pink.dark : colors.pink.light}
+                backgroundColor={colors.yellow.light}
+                foregroundColor={colors.yellow.dark}
                 icon={{ ios: 'crop', android: 'crop', web: 'crop' }}
                 disabled={isBusy}
                 label={t.register.cropImage}
@@ -655,8 +661,8 @@ export default function RegisterScreen() {
             </View>
             <View style={styles.imageTool}>
               <PreviewActionButton
-                backgroundColor={colors.violet.medium}
-                foregroundColor={isDarkTheme ? colors.violet.dark : colors.violet.light}
+                backgroundColor={colors.yellow.light}
+                foregroundColor={colors.yellow.dark}
                 icon={{ ios: 'rotate.right', android: 'rotate_right', web: 'rotate_right' }}
                 disabled={isBusy}
                 label={t.register.rotateImage}
@@ -674,8 +680,8 @@ export default function RegisterScreen() {
           <View style={styles.previewActions}>
             <View style={styles.positiveActionGroup}>
               <PreviewActionButton
-                backgroundColor={colors.green.medium}
-                foregroundColor={isDarkTheme ? colors.green.dark : colors.green.light}
+                backgroundColor={colors.blue.medium}
+                foregroundColor={isDarkTheme ? colors.blue.dark : colors.blue.light}
                 icon={{ ios: 'square.and.arrow.down.fill', android: 'save', web: 'save' }}
                 disabled={isBusy}
                 label={t.register.saveQuick}
@@ -684,8 +690,8 @@ export default function RegisterScreen() {
                 prominent
               />
               <PreviewActionButton
-                backgroundColor={colors.turquoise.medium}
-                foregroundColor={isDarkTheme ? colors.turquoise.dark : colors.turquoise.light}
+                backgroundColor={colors.green.medium}
+                foregroundColor={isDarkTheme ? colors.green.dark : colors.green.light}
                 icon={{ ios: 'square.and.pencil', android: 'edit', web: 'edit' }}
                 disabled={isBusy}
                 label={t.register.editPhotocard}
@@ -811,17 +817,21 @@ export default function RegisterScreen() {
 
             <PreferenceToggle
               label={t.register.favorite}
-              colorFamily={colors.orange}
-              activeSymbol="★"
-              inactiveSymbol="☆"
+              colorFamily={colors.pink}
+              activeSymbol={{ ios: 'heart.fill', android: 'favorite', web: 'favorite' }}
+              inactiveSymbol={{ ios: 'heart', android: 'favorite_border', web: 'favorite_border' }}
               value={catalog.favorite}
               onChange={(value) => updateCatalog('favorite', value)}
             />
             <PreferenceToggle
               label={t.register.wanted}
-              colorFamily={colors.pink}
-              activeSymbol="♥"
-              inactiveSymbol="♡"
+              colorFamily={colors.purple}
+              activeSymbol={{ ios: 'bookmark.fill', android: 'bookmark', web: 'bookmark' }}
+              inactiveSymbol={{
+                ios: 'bookmark',
+                android: 'bookmark_border',
+                web: 'bookmark_border',
+              }}
               value={catalog.wanted}
               onChange={(value) => updateCatalog('wanted', value)}
             />
@@ -863,8 +873,8 @@ export default function RegisterScreen() {
           {error && <ThemedText style={styles.error}>{t.register[error]}</ThemedText>}
           <View style={styles.actions}>
             <ActionButton
-              backgroundColor={colors.green.medium}
-              textColor={isDarkTheme ? colors.green.dark : colors.green.light}
+              backgroundColor={colors.blue.medium}
+              textColor={isDarkTheme ? colors.blue.dark : colors.blue.light}
               disabled={isBusy}
               label={t.register.saveCatalogued}
               loading={isBusy}
@@ -919,6 +929,47 @@ function ActionButton({
       ) : (
         <ThemedText style={[styles.buttonText, { color: textColor }]}>{label}</ThemedText>
       )}
+    </Pressable>
+  );
+}
+
+function CaptureActionButton({
+  backgroundColor,
+  foregroundColor,
+  disabled,
+  label,
+  icon,
+  onPress,
+}: {
+  backgroundColor: string;
+  foregroundColor: string;
+  disabled: boolean;
+  label: string;
+  icon: SymbolViewProps['name'];
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.captureButton,
+        { backgroundColor },
+        pressed && styles.pressed,
+        disabled && styles.disabled,
+      ]}>
+      <SymbolView
+        name={icon}
+        tintColor={foregroundColor}
+        size={40}
+        style={styles.captureButtonIcon}
+      />
+      <ThemedText style={[styles.captureButtonText, { color: foregroundColor }]}>
+        {label}
+      </ThemedText>
     </Pressable>
   );
 }
@@ -987,8 +1038,8 @@ function PreferenceToggle({
 }: {
   label: string;
   colorFamily: (typeof colors)[keyof typeof colors];
-  activeSymbol: string;
-  inactiveSymbol: string;
+  activeSymbol: SymbolViewProps['name'];
+  inactiveSymbol: SymbolViewProps['name'];
   value: boolean;
   onChange: (value: boolean) => void;
 }) {
@@ -1002,9 +1053,12 @@ function PreferenceToggle({
       <ThemedText style={[styles.preferenceLabel, { color: colorFamily.dark }]}>
         {label}
       </ThemedText>
-      <ThemedText style={[styles.preferenceIcon, { color: colorFamily.medium }]}>
-        {value ? activeSymbol : inactiveSymbol}
-      </ThemedText>
+      <SymbolView
+        name={value ? activeSymbol : inactiveSymbol}
+        tintColor={colorFamily.medium}
+        size={28}
+        style={styles.preferenceIcon}
+      />
     </Pressable>
   );
 }
@@ -1049,6 +1103,30 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 420,
     gap: Spacing.two,
+  },
+  captureActions: {
+    width: '100%',
+    maxWidth: 420,
+    flexDirection: 'row',
+    gap: Spacing.two,
+  },
+  captureButton: {
+    flex: 1,
+    aspectRatio: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: Spacing.two,
+    padding: Spacing.two,
+    borderRadius: 20,
+  },
+  captureButtonIcon: {
+    width: 44,
+    height: 44,
+  },
+  captureButtonText: {
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'center',
   },
   imageTools: {
     width: '100%',
@@ -1160,7 +1238,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: '#ffffff',
     borderRadius: 18,
-    backgroundColor: colors.turquoise.medium,
+    backgroundColor: colors.yellow.medium,
   },
   button: {
     minHeight: 52,
@@ -1250,9 +1328,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   preferenceIcon: {
-    fontSize: 28,
-    lineHeight: 34,
-    fontWeight: '800',
+    width: 32,
+    height: 32,
   },
   ratingChoices: {
     flexDirection: 'row',

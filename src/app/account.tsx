@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, View, Pressable } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Spacing } from '@/constants/theme';
+import { colors, Spacing } from '@/constants/theme';
 import { useLanguage, type ThemePreference } from '@/i18n/language-context';
 import type { Language, Personality, Pronoun } from '@/i18n/translations';
 
@@ -35,11 +35,17 @@ function OptionGroup<Value extends string>({
           const content = (
             <ThemedView
               type={isSelected ? 'backgroundSelected' : 'background'}
-              style={styles.option}>
+              style={[
+                styles.option,
+                isSelected && { backgroundColor: colors.purple.medium },
+              ]}>
               <ThemedText
                 type="small"
-                themeColor={isSelected ? 'text' : 'textSecondary'}
-                style={styles.optionText}>
+                themeColor="textSecondary"
+                style={[
+                  styles.optionText,
+                  isSelected && { color: colors.purple.dark },
+                ]}>
                 {isSelected ? '✓ ' : ''}
                 {option.label}
               </ThemedText>
@@ -88,7 +94,7 @@ export default function AccountScreen() {
         showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <ThemedView type="backgroundElement" style={styles.avatar}>
-            <ThemedText style={styles.avatarIcon}>👤</ThemedText>
+            <ThemedText style={[styles.avatarIcon, { color: colors.purple.dark }]}>👤</ThemedText>
           </ThemedView>
           <ThemedText type="subtitle" style={styles.title}>
             {t.account.title}
@@ -116,8 +122,12 @@ export default function AccountScreen() {
             {t.account.avatar}
           </ThemedText>
           <ThemedView type="background" style={styles.avatarPlaceholder}>
-            <ThemedView type="backgroundSelected" style={styles.avatarPreview}>
-              <ThemedText style={styles.avatarPlaceholderIcon}>👤</ThemedText>
+            <ThemedView
+              type="backgroundSelected"
+              style={[styles.avatarPreview, { backgroundColor: colors.purple.medium }]}>
+              <ThemedText style={[styles.avatarPlaceholderIcon, { color: colors.purple.light }]}>
+                👤
+              </ThemedText>
             </ThemedView>
             <View style={styles.avatarCopy}>
               <ThemedText type="smallBold">{t.account.avatarPlaceholder}</ThemedText>
@@ -203,6 +213,7 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.two,
   },
   avatar: {
+    backgroundColor: colors.purple.light,
     width: 72,
     height: 72,
     borderRadius: 36,
