@@ -9,11 +9,39 @@ export const baseTranslations = {
       categories: 'Categorías',
       account: 'Mi Cuenta',
     },
+    nara: {
+      title: 'Nara',
+      language: 'Idioma',
+      languages: {
+        es: 'Español',
+        en: 'English',
+      },
+      wardrobe: 'Armario',
+      mood: 'Actitud',
+      outfits: {
+        unicornio: 'Unicornio',
+        capibara: 'Capibara',
+        algodon: 'Algodón de Azúcar',
+        cerezo: 'Cerezo',
+        pato: 'Pato de Goma',
+      },
+      moodOptions: {
+        serena: 'Amable',
+        nara: 'Muy sonriente',
+        delulu: 'Delulu máxima',
+        segura: '¿Segura?',
+      },
+      swatches: {
+        background: 'Fondo',
+        primary: 'Principal',
+      },
+    },
     personality: {
       options: {
         serena: 'Serena',
         nara: 'Nara',
         delulu: 'Delulu',
+        segura: '¿Segura?',
       },
       voices: {
         serena: {
@@ -33,6 +61,12 @@ export const baseTranslations = {
           guardian: 'Guardiana de tu colección.',
           universe: 'Tu colección es tu universo.',
           map: 'Yo cuido del mapa.',
+        },
+        segura: {
+          greeting: '¿53 categorías? Interesante.',
+          guardian: 'Voy a asumir que esta photocard es distinta de las demás.',
+          universe: 'No necesito una explicación. Sé que vas a tener una.',
+          map: '¿Otro cambio? Te escucho.',
         },
       },
     },
@@ -139,23 +173,11 @@ export const baseTranslations = {
     },
     account: {
       title: '👤 Mi Cuenta',
-      description: 'Personaliza tu espacio y cómo te acompaña Nara.',
+      description: 'Tu perfil y la información de tu cuenta.',
       profile: 'Tu perfil',
       name: 'Nombre',
       namePlaceholder: 'Escribe tu nombre',
-      preferences: 'Preferencias',
-      language: 'Idioma',
-      languages: {
-        es: 'Español',
-        en: 'English',
-      },
-      theme: 'Tema',
-      themes: {
-        light: 'Claro',
-        dark: 'Oscuro',
-        system: 'Sistema',
-      },
-      naraMood: 'Humor de Nara',
+      preferences: 'Información personal',
       pronouns: 'Pronombres',
       pronounOptions: {
         feminine: 'Femenino',
@@ -180,11 +202,39 @@ export const baseTranslations = {
       categories: 'Categories',
       account: 'My Account',
     },
+    nara: {
+      title: 'Nara',
+      language: 'Language',
+      languages: {
+        es: 'Spanish',
+        en: 'English',
+      },
+      wardrobe: 'Wardrobe',
+      mood: 'Mood',
+      outfits: {
+        unicornio: 'Unicorn',
+        capibara: 'Capybara',
+        algodon: 'Cotton Candy',
+        cerezo: 'Cherry',
+        pato: 'Rubber Duck',
+      },
+      moodOptions: {
+        serena: 'Kind',
+        nara: 'Very smiley',
+        delulu: 'Maximum delulu',
+        segura: 'Are you sure?',
+      },
+      swatches: {
+        background: 'Background',
+        primary: 'Primary',
+      },
+    },
     personality: {
       options: {
         serena: 'Serene',
         nara: 'Nara',
         delulu: 'Delulu',
+        segura: 'Are you sure?',
       },
       voices: {
         serena: {
@@ -204,6 +254,12 @@ export const baseTranslations = {
           guardian: 'Guardian of your collection.',
           universe: 'Your collection is your universe.',
           map: 'I take care of the map.',
+        },
+        segura: {
+          greeting: '53 categories? Interesting.',
+          guardian: "I'll assume this photocard is different from the others.",
+          universe: "I don't need an explanation. I know you'll have one.",
+          map: 'Another change? I am listening.',
         },
       },
     },
@@ -310,23 +366,11 @@ export const baseTranslations = {
     },
     account: {
       title: '👤 My Account',
-      description: 'Make this space yours and choose how Nara keeps you company.',
+      description: 'Your profile and account information.',
       profile: 'Your profile',
       name: 'Name',
       namePlaceholder: 'Enter your name',
-      preferences: 'Preferences',
-      language: 'Language',
-      languages: {
-        es: 'Spanish',
-        en: 'English',
-      },
-      theme: 'Theme',
-      themes: {
-        light: 'Light',
-        dark: 'Dark',
-        system: 'System',
-      },
-      naraMood: "Nara's mood",
+      preferences: 'Personal information',
       pronouns: 'Pronouns',
       pronounOptions: {
         feminine: 'Feminine',

@@ -6,6 +6,7 @@ import {
   TabTrigger,
   TabTriggerSlotProps,
 } from 'expo-router/ui';
+import { router } from 'expo-router';
 import { SymbolView, type SymbolViewProps } from 'expo-symbols';
 import type { ComponentProps } from 'react';
 import { Image, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
@@ -13,36 +14,27 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { colors, Spacing, tabBarColors, tabColors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { useTheme } from '@/hooks/use-theme';
 import { useLanguage } from '@/i18n/language-context';
 
 export default function AppTabs() {
   const { t } = useLanguage();
   const insets = useSafeAreaInsets();
-  const theme = useTheme();
 
   return (
     <Tabs>
       <TabSlot style={{ height: '100%' }} />
-      <View
-        accessibilityLabel="Nara"
-        accessibilityRole="image"
-        accessible
-        style={[
-          styles.naraAccessPlaceholder,
-          {
-            top: insets.top + Spacing.two,
-            backgroundColor: theme.backgroundElement,
-            borderColor: theme.textSecondary,
-          },
-        ]}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={t.nara.title}
+        onPress={() => router.push('/nara')}
+        style={({ pressed }) => [styles.naraShortcut, { top: insets.top + Spacing.two }, pressed && styles.pressed]}>
         <Image
           accessible={false}
           resizeMode="contain"
           source={require('@/assets/images/logo.png')}
           style={styles.naraIcon}
         />
-      </View>
+      </Pressable>
       <TabList asChild>
         <CustomTabList>
           <TabTrigger name="universe" href="/universe" asChild>
@@ -94,6 +86,7 @@ export default function AppTabs() {
               </TabButton>
             </TabTrigger>
           )}
+          <TabTrigger name="nara" href="/nara" style={styles.hiddenTabTrigger} />
         </CustomTabList>
       </TabList>
     </Tabs>
@@ -274,21 +267,22 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
   },
-  naraAccessPlaceholder: {
+  naraShortcut: {
     position: 'absolute',
-    right: Spacing.three,
+    left: Spacing.three,
     zIndex: 2,
     width: 48,
     height: 48,
     alignItems: 'center',
     justifyContent: 'center',
     padding: Spacing.one,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 14,
+  },
+  hiddenTabTrigger: {
+    display: 'none',
   },
   naraIcon: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 10,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   },
 });

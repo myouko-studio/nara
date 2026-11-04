@@ -12,6 +12,7 @@ import {
 import {
   translations,
   type Language,
+  type NaraOutfit,
   type Personality,
   type Pronoun,
 } from './translations';
@@ -21,14 +22,18 @@ export type ThemePreference = 'light' | 'dark' | 'system';
 type Preferences = {
   language: Language;
   theme: ThemePreference;
+  outfit: NaraOutfit;
   personality: Personality;
   pronouns: Pronoun;
 };
+
+type StoredPreferences = Omit<Preferences, 'outfit'> & Partial<Pick<Preferences, 'outfit'>>;
 
 type LanguageContextValue = Preferences & {
   isLoaded: boolean;
   setLanguage: (language: Language) => void;
   setTheme: (theme: ThemePreference) => void;
+  setOutfit: (outfit: NaraOutfit) => void;
   setPersonality: (personality: Personality) => void;
   setPronouns: (pronouns: Pronoun) => void;
 };
@@ -37,13 +42,14 @@ const STORAGE_KEY = 'Nara.preferences';
 const DEFAULT_PREFERENCES: Preferences = {
   language: 'es',
   theme: 'system',
+  outfit: 'unicornio',
   personality: 'nara',
   pronouns: 'neutral',
 };
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-function isPreferences(value: unknown): value is Preferences {
+function isPreferences(value: unknown): value is StoredPreferences {
   if (!value || typeof value !== 'object') {
     return false;
   }
@@ -57,15 +63,25 @@ function isPreferences(value: unknown): value is Preferences {
       preferences.theme === 'system') &&
     (preferences.personality === 'serena' ||
       preferences.personality === 'nara' ||
-      preferences.personality === 'delulu') &&
+      preferences.personality === 'delulu' ||
+      preferences.personality === 'segura') &&
     (preferences.pronouns === 'feminine' ||
       preferences.pronouns === 'masculine' ||
-      preferences.pronouns === 'neutral')
+      preferences.pronouns === 'neutral') &&
+    (preferences.outfit === undefined ||
+      preferences.outfit === 'unicornio' ||
+      preferences.outfit === 'capibara' ||
+      preferences.outfit === 'algodon' ||
+      preferences.outfit === 'cerezo' ||
+      preferences.outfit === 'pato')
   );
 }
 
 export function LanguageProvider({ children }: PropsWithChildren) {
-  const [preferences, setPreferences] = useState<Preferences>(DEFAULT_PREFERENCES);
+  const [preferences, setPreferences] = useState<Preferences>(() => ({
+    ...DEFAULT_PREFERENCES,
+    outfit: Appearance.getColorScheme() === 'dark' ? 'capibara' : 'unicornio',
+  }));
   const [isLoaded, setIsLoaded] = useState(false);
   const writeQueue = useRef(Promise.resolve());
 
@@ -85,7 +101,16 @@ export function LanguageProvider({ children }: PropsWithChildren) {
         }
 
         if (isMounted) {
-          setPreferences(parsedPreferences);
+          setPreferences({
+            ...parsedPreferences,
+            outfit:
+              parsedPreferences.outfit ??
+              (parsedPreferences.theme === 'dark' ||
+              (parsedPreferences.theme === 'system' &&
+                Appearance.getColorScheme() === 'dark')
+                ? 'capibara'
+                : 'unicornio'),
+          });
         }
       } catch (error) {
         console.error('Unable to load Nara preferences.', error);
@@ -128,6 +153,17 @@ export function LanguageProvider({ children }: PropsWithChildren) {
         setLanguage: (language) =>
           setPreferences((current) => ({ ...current, language })),
         setTheme: (theme) => setPreferences((current) => ({ ...current, theme })),
+        setOutfit: (outfit) =>
+          setPreferences((current) => ({
+            ...current,
+            outfit,
+            theme:
+              outfit === 'unicornio'
+                ? 'light'
+                : outfit === 'capibara'
+                  ? 'dark'
+                  : current.theme,
+          })),
         setPersonality: (personality) =>
           setPreferences((current) => ({ ...current, personality })),
         setPronouns: (pronouns) =>

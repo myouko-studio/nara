@@ -3,8 +3,8 @@ import { ScrollView, StyleSheet, View, Pressable } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { colors, Spacing } from '@/constants/theme';
-import { useLanguage, type ThemePreference } from '@/i18n/language-context';
-import type { Language, Personality, Pronoun } from '@/i18n/translations';
+import { useLanguage } from '@/i18n/language-context';
+import type { Pronoun } from '@/i18n/translations';
 
 type Option<Value extends string> = {
   value: Value;
@@ -75,12 +75,6 @@ function OptionGroup<Value extends string>({
 
 export default function AccountScreen() {
   const {
-    language,
-    setLanguage,
-    theme,
-    setTheme,
-    personality,
-    setPersonality,
     pronouns,
     setPronouns,
     isLoaded,
@@ -142,41 +136,6 @@ export default function AccountScreen() {
           <ThemedText type="smallBold" style={styles.cardTitle}>
             {t.account.preferences}
           </ThemedText>
-          <OptionGroup
-            label={t.account.language}
-            options={[
-              { value: 'es', label: t.account.languages.es },
-              { value: 'en', label: t.account.languages.en },
-            ]}
-            selectedOption={language}
-            onSelect={(value: Language) => setLanguage(value)}
-            disabled={!isLoaded}
-          />
-          <View style={styles.divider} />
-          <OptionGroup
-            label={t.account.theme}
-            options={[
-              { value: 'light', label: t.account.themes.light },
-              { value: 'dark', label: t.account.themes.dark },
-              { value: 'system', label: t.account.themes.system },
-            ]}
-            selectedOption={theme}
-            onSelect={(value: ThemePreference) => setTheme(value)}
-            disabled={!isLoaded}
-          />
-          <View style={styles.divider} />
-          <OptionGroup
-            label={t.account.naraMood}
-            options={[
-              { value: 'serena', label: t.personality.options.serena },
-              { value: 'nara', label: t.personality.options.nara },
-              { value: 'delulu', label: t.personality.options.delulu },
-            ]}
-            selectedOption={personality}
-            onSelect={(value: Personality) => setPersonality(value)}
-            disabled={!isLoaded}
-          />
-          <View style={styles.divider} />
           <OptionGroup
             label={t.account.pronouns}
             options={[
@@ -292,9 +251,5 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 13,
     textAlign: 'center',
-  },
-  divider: {
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: '#80808040',
   },
 });

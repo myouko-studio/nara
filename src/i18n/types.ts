@@ -1,6 +1,7 @@
 export type Language = 'es' | 'en';
-export type Personality = 'serena' | 'nara' | 'delulu';
+export type Personality = 'serena' | 'nara' | 'delulu' | 'segura';
 export type Pronoun = 'feminine' | 'masculine' | 'neutral';
+export type NaraOutfit = 'unicornio' | 'capibara' | 'algodon' | 'cerezo' | 'pato';
 
 export type NaraVoice = {
   greeting: string;
@@ -20,6 +21,19 @@ export type Translation = {
   personality: {
     options: Record<Personality, string>;
     voices: Record<Personality, NaraVoice>;
+  };
+  nara: {
+    title: string;
+    language: string;
+    languages: Record<Language, string>;
+    wardrobe: string;
+    mood: string;
+    outfits: Record<NaraOutfit, string>;
+    moodOptions: Record<Personality, string>;
+    swatches: {
+      background: string;
+      primary: string;
+    };
   };
   home: {
     title: string;
@@ -124,15 +138,6 @@ export type Translation = {
     name: string;
     namePlaceholder: string;
     preferences: string;
-    language: string;
-    languages: Record<Language, string>;
-    theme: string;
-    themes: {
-      light: string;
-      dark: string;
-      system: string;
-    };
-    naraMood: string;
     pronouns: string;
     pronounOptions: Record<Pronoun, string>;
     welcomeForms: Record<Pronoun, string>;
